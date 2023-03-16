@@ -21,7 +21,7 @@ class MySqlGrammar extends IlluminateMySqlGrammar
         if (strpos($table, '<-->') !== false) {
             list($prefix, $table, $database) = explode('<-->', $table);
             $wrappedTable = $this->wrapTable($table, true);
-            $wrappedTablePrefixed = $this->wrap($prefix.$table, true);
+            $wrappedTablePrefixed = $prefix == $database.'.' ? $this->wrap($table, true) : $this->wrap($prefix.$table, true);
             if ($wrappedTable != $wrappedTablePrefixed) {
                 return 'from '.$this->wrap($database).'.'.$wrappedTablePrefixed.' as '.$wrappedTable;
             }
